@@ -23,8 +23,8 @@ describe('Google Cloud Platform Pricing Calculator', () => {
         await googleCloudPricingCalcPage
             .activateRequiredFrame(googleCloudPricingCalcPage.requiredFrame);
 
-        await googleCloudPricingCalcPage
-            .selectFomDropDownList(googleCloudPricingCalcPage.operatingSystemList, googleCloudPricingCalcPage.operatingSystemFree)
+        // await googleCloudPricingCalcPage
+        //     .selectFomDropDownList(googleCloudPricingCalcPage.operatingSystemList, googleCloudPricingCalcPage.operatingSystemFree)
 
         await googleCloudPricingCalcPage
             .selectFomDropDownList(googleCloudPricingCalcPage.machineClassList, googleCloudPricingCalcPage.machineClassRegular)
