@@ -2,7 +2,6 @@ const googleCloudHomePage = require('../pageobjects/googleCloudHomePage');
 const googleCloudPricingCalcPage = require('../pageobjects/googleCloudPricingCalcPage');
 const googleSearchResultsPage = require('../pageobjects/googleSearchResultsPage');
 const googleCloudCalculationResultsPage = require('../pageobjects/googleCloudCalculationResultsPage');
-const { activateRequiredFrame } = require('../pageobjects/googleCloudPricingCalcPage');
 
 
 describe('Google Cloud Platform Pricing Calculator', () => {
@@ -21,7 +20,8 @@ describe('Google Cloud Platform Pricing Calculator', () => {
         await googleSearchResultsPage
             .swichToSearchResultsPage(googleSearchResultsPage.cloudPlatformCalcSearchResult);
 
-        await googleCloudPricingCalcPage.activateRequiredFrame();
+        await googleCloudPricingCalcPage
+            .activateRequiredFrame(googleCloudPricingCalcPage.requiredFrame);
 
         await googleCloudPricingCalcPage
             .selectFomDropDownList(googleCloudPricingCalcPage.operatingSystemList, googleCloudPricingCalcPage.operatingSystemFree)

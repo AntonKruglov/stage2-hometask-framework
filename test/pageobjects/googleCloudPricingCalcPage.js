@@ -5,7 +5,7 @@ class GoogleCloudPricingCalcPage extends BasePage {
 
 
 
-    get requiredFrame() { return $('//*[@id="gc-wrapper"]/main') };
+    get requiredFrame() { return $('#cloud-site devsite-iframe iframe') };
     get operatingSystemList() { return $('div.compute-engine-block div.ng-scope form #select_value_label_61.md-select-value span.md-select-icon') };
     get operatingSystemFree() { return $('#select_option_70 > div:nth-child(1)') };
     get machineClassList() { return $('#select_value_label_62.md-select-value span.md-select-icon') };
@@ -34,10 +34,11 @@ class GoogleCloudPricingCalcPage extends BasePage {
 
 
 
-    async activateRequiredFrame() {
-        await browser.switchToFrame(0);
-        await browser.switchToFrame(0);
-
+    async activateRequiredFrame(section) {
+        await section.waitForExist()
+        browser.switchToFrame(0);
+        browser.switchToFrame(0);
+        // await section.waitForExist()
     };
 
     async setNumberValueIntoField(fieldToFillIn, value) {
