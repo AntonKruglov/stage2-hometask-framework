@@ -26,10 +26,10 @@ exports.config = {
 
     suites: {
         smoke: [
-            './test/specs/googleCloudPricingCalcTest.js'
+            './test/specs/**/googleCloudPricingCalcTest.js'
         ],
         all: [
-            './test/specs/**/*.js'
+            './test/specs/**/googleClounSendEmailTest.js'
         ]
     },
 
