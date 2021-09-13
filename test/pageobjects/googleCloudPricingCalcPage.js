@@ -34,11 +34,10 @@ class GoogleCloudPricingCalcPage extends BasePage {
 
 
 
-    async activateRequiredFrame(section) {
-        await section.waitForExist()
-        browser.switchToFrame(0);
-        browser.switchToFrame(0);
-        browser.switchToFrame(0);
+    async activateRequiredFrame() {
+        await browser.switchToFrame(0);
+        await browser.switchToFrame(0);
+
     };
 
     async setNumberValueIntoField(fieldToFillIn, value) {
