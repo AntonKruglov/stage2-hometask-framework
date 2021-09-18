@@ -4,6 +4,7 @@ const googleSearchResultsPage = require('../pageobjects/googleSearchResultsPage'
 const googleCloudCalculationResultsPage = require('../pageobjects/googleCloudCalculationResultsPage');
 
 
+
 describe('Google Cloud Platform Pricing Calculator', () => {
 
     const textToSearch = 'Google Cloud Platform Pricing Calculator';
@@ -11,8 +12,7 @@ describe('Google Cloud Platform Pricing Calculator', () => {
 
     before(async() => {
 
-        await googleCloudHomePage
-            .open();
+        await googleCloudHomePage.open();
 
         await googleCloudHomePage
             .search(googleCloudHomePage.activeSearchBtn, googleCloudHomePage.activeSearchBox, textToSearch);
@@ -23,8 +23,9 @@ describe('Google Cloud Platform Pricing Calculator', () => {
         await googleCloudPricingCalcPage
             .activateRequiredFrame(googleCloudPricingCalcPage.requiredFrame);
 
+
         await googleCloudPricingCalcPage
-            .selectFomDropDownList(googleCloudPricingCalcPage.machineClassList, googleCloudPricingCalcPage.machineClassRegular)
+            .selectFomDropDownList(googleCloudPricingCalcPage.machineClassList, googleCloudPricingCalcPage.machineClassRegular);
 
         await googleCloudPricingCalcPage
             .setNumberValueIntoField(googleCloudPricingCalcPage.numberOfInstancesField, numberOfInstances);
@@ -55,40 +56,43 @@ describe('Google Cloud Platform Pricing Calculator', () => {
         await googleCloudPricingCalcPage
             .selectFomDropDownList(
                 googleCloudPricingCalcPage.datacenterLocationList, googleCloudPricingCalcPage.datacenterFrankfurtLocation
-            )
+            );
         await googleCloudPricingCalcPage
-            .selectFomDropDownList(googleCloudPricingCalcPage.commitedUsageList, googleCloudPricingCalcPage.commitedUsageOneYear)
+            .selectFomDropDownList(googleCloudPricingCalcPage.commitedUsageList, googleCloudPricingCalcPage.commitedUsageOneYear);
 
         await googleCloudPricingCalcPage
-            .clickTheButton(googleCloudPricingCalcPage.estimateBtn)
+            .clickTheButton(googleCloudPricingCalcPage.estimateBtn);
+
+        await googleCloudPricingCalcPage.clickTheButton(googleCloudCalculationResultsPage.emailEstimateBtn);
+
+        browser.newWindow('https://yopmail.com/en/');
+
+        await googleCloudPricingCalcPage.clickTheButton(googleCloudCalculationResultsPage.randomEmailBtn);
+
+        await googleCloudPricingCalcPage.clickTheButton(googleCloudCalculationResultsPage.copyBtn);
+
+        await googleCloudCalculationResultsPage.swichToAnotherWindow('cloud.google.com/products/');
+
+        await googleCloudPricingCalcPage.activateRequiredFrame(googleCloudPricingCalcPage.requiredFrame);
+
+        await googleCloudCalculationResultsPage.fillInEmailField(googleCloudCalculationResultsPage.emailField);
+
+        await googleCloudPricingCalcPage.clickTheButton(googleCloudCalculationResultsPage.sendEmailBtn);
+
+        await googleCloudCalculationResultsPage.swichToAnotherWindow('https://yopmail.com/en/');
+
+        await googleCloudPricingCalcPage.clickTheButton(googleCloudCalculationResultsPage.yopmailCheckInboxBtn);
+
+        await googleCloudPricingCalcPage.clickTheButton(googleCloudCalculationResultsPage.refreshBtn);
+
+        await googleCloudCalculationResultsPage.getCostFromEmail(googleCloudCalculationResultsPage.estimatedCostFromGoogle)
 
     });
 
 
+    it('should check the total estimated monthly cost in letter matches the one in the calculator', async() => {
 
-    it('should check if the VM Class is regular', async() => {
-        await expect(googleCloudCalculationResultsPage.vmClassField).toHaveText('VM class: regular');
-    });
-
-    it('should check if the instance type is correct', async() => {
-        await expect(googleCloudCalculationResultsPage.instanceTypeField)
-            .toHaveText('Instance type: n1-standard-8\nCommitted Use Discount applied\nUSD 900.32');
-    });
-
-    it('should check the location', async() => {
-        await expect(googleCloudCalculationResultsPage.regionField).toHaveText('Region: Frankfurt');
-    });
-
-    it('should check if the local SSD is 2x375 GiB', async() => {
-        await expect(googleCloudCalculationResultsPage.localSsdField).toHaveText('Local SSD: 2x375 GiB\nCommitted Use Discount applied');
-    });
-
-    it('should check if the commitment term is 1 Year', async() => {
-        await expect(googleCloudCalculationResultsPage.commitmentTermField).toHaveText('Commitment term: 1 Year');
-    });
-
-    it('should check total estimated cost per 1 month ', async() => {
-        await expect(googleCloudCalculationResultsPage.estimatedCostField).toHaveTextContaining('1,083.33');
+        await expect(googleCloudCalculationResultsPage.estimatedCostFromGoogle).toHaveTextContaining('1,083.33');
     });
 
 });
